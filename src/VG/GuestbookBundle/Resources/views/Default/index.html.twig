@@ -1,0 +1,23 @@
+{% extends '::base.html.twig' %}
+{% block title %}Guestbook{% endblock %}
+{% block body %}
+    <a href="/registration">Registration</a>
+    <h2>Guestbook</h2>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+    {% if entities|length > 0 %}
+        <ul>
+            {% for entity in entities %}
+                <li>
+
+                    <div>Name: {{ entity.name }}</div>
+                    <div>Email: {{ entity.email }}</div>
+                    <div>Text: {{ entity.text }}</div>
+                    {#            <div>{% if entity.created %}{{ entity.created|date('Y-m-d H:i:s') }}{% endif %}</div>
+                                <div>{% if entity.updated %}{{ entity.updated|date('Y-m-d H:i:s') }}{% endif %}</div>#}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}
