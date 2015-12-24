@@ -41,6 +41,7 @@ class SecurityController extends Controller{
         $roles = ['ROLE_ADMIN'];
         $user = new User($roles);
         $form = $this->createFormBuilder($user)
+            ->add('name', 'text')
             ->add('password', 'password')
             ->add('email', 'email')
             ->add('register', 'submit')
@@ -55,14 +56,6 @@ class SecurityController extends Controller{
             $user->setPassword($password);
 
             $em->persist($user);
-
-            // добавим сообщение в гостевую книгу. Можно перенести на event Listener в сервисы
-            $message = new Message();
-            $message->setName('admin');
-            $message->setEmail('admin@my-super-site.com');
-            $message->setText('Приветствуем нового пользователя ' . $user->getUsername());
-            $em->persist($message);
-
             $em->flush();
 
             return $this->redirect($this->generateUrl('login_path'));
